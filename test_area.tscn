@@ -4,14 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dlwslvprjim21" path="res://citrus_orchard_puresky_4k.exr" id="2_rfpkf"]
 [ext_resource type="PackedScene" uid="uid://cp0xlar5bqga0" path="res://Assets/Sword.glb" id="3_6fnve"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fw7ol"]
-radius = 0.54
-height = 2.04
-
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_64fjj"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_6fnve"]
-size = Vector3(0.03508, 1.1543, 0.0678711)
 
 [sub_resource type="Animation" id="Animation_6fnve"]
 resource_name = "swing"
@@ -49,14 +42,14 @@ tracks/0/enabled = true
 tracks/0/path = NodePath("Sword")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array()
+tracks/0/keys = PackedFloat32Array(0.0333333, 1, 0.79101, 0.202877, -0.725657)
 tracks/1/type = "rotation_3d"
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/path = NodePath("Sword")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array()
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.233333, 1, -0.0887639, 0, 0, 0.996053, 0.466667, 1, 0, 0, 0, 1, 0.866667, 1, -0.00253945, 0, 0, 0.999997)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vt2yd"]
 _data = {
@@ -64,6 +57,13 @@ _data = {
 &"RESET": SubResource("Animation_od0h0"),
 &"swing": SubResource("Animation_6fnve")
 }
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fw7ol"]
+radius = 0.54
+height = 2.04
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6fnve"]
+size = Vector3(0.03508, 1.1543, 0.0678711)
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6fnve"]
 panorama = ExtResource("2_rfpkf")
@@ -85,6 +85,17 @@ size = Vector3(9.26672, 1, 6.74609)
 [node name="Player" type="CharacterBody3D" parent="."]
 script = ExtResource("1_64fjj")
 
+[node name="PlayerTemporaryMesh" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("CapsuleMesh_64fjj")
+
+[node name="PlayerTemporaryMesh2" type="MeshInstance3D" parent="Player"]
+
+[node name="PlayerAnimations" type="AnimationPlayer" parent="Player"]
+libraries = {
+&"": SubResource("AnimationLibrary_vt2yd")
+}
+speed_scale = 1.46
+
 [node name="PlayerCollider" type="CollisionShape3D" parent="Player"]
 shape = SubResource("CapsuleShape3D_fw7ol")
 
@@ -98,25 +109,14 @@ margin = 0.5
 [node name="Camera3D" type="Camera3D" parent="Player/PlayerCollider/CameraOrigin/SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 6.5)
 
-[node name="PlayerTemporaryMesh" type="MeshInstance3D" parent="Player"]
-mesh = SubResource("CapsuleMesh_64fjj")
-
-[node name="PlayerTemporaryMesh2" type="MeshInstance3D" parent="Player"]
-
 [node name="Sword" parent="Player" instance=ExtResource("3_6fnve")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.79101, 0.202877, -0.725657)
 
-[node name="Area3D" type="Area3D" parent="Player/Sword"]
+[node name="DamageArea" type="Area3D" parent="Player/Sword"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Sword/Area3D"]
+[node name="AreaCollider" type="CollisionShape3D" parent="Player/Sword/DamageArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00303042, 0.575262, 0.00251764)
 shape = SubResource("BoxShape3D_6fnve")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
-libraries = {
-&"": SubResource("AnimationLibrary_vt2yd")
-}
-speed_scale = 1.46
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vt2yd")

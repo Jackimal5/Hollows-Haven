@@ -19,19 +19,22 @@ var released_jump = false
 
 #Declared Nodes
 @onready var camera_origin: Node3D = $PlayerCollider/CameraOrigin
-@onready var animation_player = $AnimationPlayer
+@onready var animation_player = $PlayerAnimations
+
 
 func _ready():
+	#Captures Mouse
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _input(event):
+	#Camera Movement
 	if event is InputEventMouseMotion:
 		rotate_y(deg_to_rad(-event.relative.x * sensitivity))
 		camera_origin.rotate_x(deg_to_rad(-event.relative.y * sensitivity))
 		camera_origin.rotation.x = clamp(camera_origin.rotation.x, deg_to_rad(-90), deg_to_rad(45))
 		
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
+	#Adds Gravity
 	if not is_on_floor():
 		if !jumped:
 			velocity.y += -regular_gravity * delta
@@ -51,21 +54,26 @@ func _physics_process(delta: float) -> void:
 		released_jump = false
 		jumped = true
 	
+	#Exit Game
 	if Input.is_action_just_released("quit"):
 		get_tree().quit()
 	
+	#Handels Sprinting Logic
 	if Input.is_action_pressed("sprint"):
 		sprinting = true
 	else:
 		sprinting = false
 	
+	#Sword Attack 
 	if Input.is_action_just_pressed("left_click"):
+		animation_player.speed_scale = 1.5
 		animation_player.play("swing")
 	
 	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
+	#Moves the Player
 	if direction:
 		if sprinting:
 			velocity.x = move_toward(velocity.x, direction.x * sprinting_speed, acceleration * delta)
