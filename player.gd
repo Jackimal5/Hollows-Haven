@@ -6,9 +6,13 @@ const sprinting_speed = 7.0
 const jump_velocity = 8
 const friction = 18.0
 const acceleration = 25.0
+const regular_gravity = 9.8
+const released_gravity = 23.0
 
 #States
 var sprinting =  false
+var jumped = false
+var released_jump = false
 
 #Changables
 @export var sensitivity = 0.5
@@ -28,11 +32,23 @@ func _input(event):
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		if !jumped:
+			velocity.y += -regular_gravity * delta
+		else:
+			if !released_jump:
+				if Input.is_action_pressed("jump"):
+					velocity.y += -regular_gravity * delta
+				else:
+					velocity.y += -released_gravity * delta
+					released_jump = true
+			else:
+				velocity.y += -released_gravity * delta
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_velocity
+		released_jump = false
+		jumped = true
 	
 	if Input.is_action_just_released("quit"):
 		get_tree().quit()
