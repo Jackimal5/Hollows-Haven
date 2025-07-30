@@ -36,14 +36,16 @@ shape = SubResource("CapsuleShape3D_fw7ol")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49461, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Player/PlayerCollider/CameraOrigin"]
-spring_length = 2.0
+spring_length = 6.5
 margin = 0.5
 
 [node name="Camera3D" type="Camera3D" parent="Player/PlayerCollider/CameraOrigin/SpringArm3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.85612)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 6.5)
 
 [node name="PlayerTemporaryMesh" type="MeshInstance3D" parent="Player"]
 mesh = SubResource("CapsuleMesh_64fjj")
+
+[node name="PlayerTemporaryMesh2" type="MeshInstance3D" parent="Player"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vt2yd")
