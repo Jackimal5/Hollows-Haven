@@ -17,8 +17,9 @@ var released_jump = false
 #Changables
 @export var sensitivity = 0.5
 
-#Declared Variables
+#Declared Nodes
 @onready var camera_origin: Node3D = $PlayerCollider/CameraOrigin
+@onready var animation_player = $AnimationPlayer
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -57,6 +58,9 @@ func _physics_process(delta: float) -> void:
 		sprinting = true
 	else:
 		sprinting = false
+	
+	if Input.is_action_just_pressed("left_click"):
+		animation_player.play("swing")
 	
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.

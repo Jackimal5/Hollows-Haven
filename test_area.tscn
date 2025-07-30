@@ -1,13 +1,69 @@
-[gd_scene load_steps=8 format=3 uid="uid://bkf2accpow3fq"]
+[gd_scene load_steps=14 format=3 uid="uid://bkf2accpow3fq"]
 
 [ext_resource type="Script" uid="uid://btvyohb56e6xd" path="res://player.gd" id="1_64fjj"]
 [ext_resource type="Texture2D" uid="uid://dlwslvprjim21" path="res://citrus_orchard_puresky_4k.exr" id="2_rfpkf"]
+[ext_resource type="PackedScene" uid="uid://cp0xlar5bqga0" path="res://Assets/Sword.glb" id="3_6fnve"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fw7ol"]
 radius = 0.54
 height = 2.04
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_64fjj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6fnve"]
+size = Vector3(0.03508, 1.1543, 0.0678711)
+
+[sub_resource type="Animation" id="Animation_6fnve"]
+resource_name = "swing"
+length = 1.02
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sword")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0.0333333, 1, 0.79101, 0.202877, -0.725657, 0.1, 1, 1.08358, 0.202877, -0.16034, 0.166667, 1, 0.790351, 0.202877, -0.93429, 0.266667, 1, 0.325608, 0.202877, -1.4062, 0.366667, 1, -0.216377, 0.202877, -1.54121, 0.466667, 1, -0.73871, 0.202877, -1.02773, 0.533333, 1, -1.03313, 0.0707609, -0.783854, 0.633333, 1, -0.0756071, 0.225469, -1.54966, 0.7, 1, 0.272299, 0.225469, -1.54966, 0.8, 1, 0.874606, 0.225469, -1.09515, 0.933333, 1, 0.79101, 0.202877, -0.725657)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sword")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0.0333333, 1, 0, 0, 0, 1, 0.133333, 1, 0.251046, 0.055955, -0.213816, 0.942405, 0.2, 1, -0.249114, 0.367465, -0.343907, 0.827429, 0.3, 1, -0.284083, 0.4529, -0.315637, 0.783933, 0.4, 1, -0.466034, 0.63126, -0.322167, 0.529652, 0.5, 1, -0.534018, 0.747713, -0.18922, 0.346331, 0.6, 1, -0.471736, 0.768354, -0.0671674, 0.427301, 0.7, 1, -0.330242, 0.500236, -0.362784, 0.713507, 0.833333, 1, -0.211145, 0.272384, -0.44282, 0.827729, 0.933333, 1, 0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_od0h0"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sword")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.79101, 0.202877, -0.725657)
+
+[sub_resource type="Animation" id="Animation_vt2yd"]
+resource_name = "Idle"
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sword")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array()
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sword")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array()
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vt2yd"]
+_data = {
+&"Idle": SubResource("Animation_vt2yd"),
+&"RESET": SubResource("Animation_od0h0"),
+&"swing": SubResource("Animation_6fnve")
+}
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6fnve"]
 panorama = ExtResource("2_rfpkf")
@@ -46,6 +102,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 6.5)
 mesh = SubResource("CapsuleMesh_64fjj")
 
 [node name="PlayerTemporaryMesh2" type="MeshInstance3D" parent="Player"]
+
+[node name="Sword" parent="Player" instance=ExtResource("3_6fnve")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.79101, 0.202877, -0.725657)
+
+[node name="Area3D" type="Area3D" parent="Player/Sword"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Sword/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00303042, 0.575262, 0.00251764)
+shape = SubResource("BoxShape3D_6fnve")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+libraries = {
+&"": SubResource("AnimationLibrary_vt2yd")
+}
+speed_scale = 1.46
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vt2yd")
