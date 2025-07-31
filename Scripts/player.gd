@@ -13,13 +13,14 @@ const released_gravity = 23.0
 var sprinting =  false
 var jumped = false
 var released_jump = false
+var rest_point_sword = 0
 
 #Changables
 @export var sensitivity = 0.5
 
 #Declared Nodes
-@onready var camera_origin: Node3D = $PlayerCollider/CameraOrigin
-@onready var animation_player = $PlayerAnimations
+@onready var camera_origin: Node3D = $CameraOrigin
+@onready var animation_player = $Sword/SwordAnimations
 
 
 #func _ready():
@@ -66,9 +67,15 @@ func _physics_process(delta: float) -> void:
 	
 	#Sword Attack 
 	if Input.is_action_just_pressed("left_click"):
-		animation_player.speed_scale = 1.5
-		animation_player.play("swing")
-	
+		if rest_point_sword == 0:
+			animation_player.speed_scale = 1.5
+			animation_player.play("swing")
+			rest_point_sword = 1
+		elif rest_point_sword == 1:
+			animation_player.speed_scale = 1.5
+			animation_player.play_backwards("swing")
+			rest_point_sword = 0
+			
 	# Get the input direction and handle the movement/deceleration.
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
