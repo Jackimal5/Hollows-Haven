@@ -3,8 +3,34 @@
 [ext_resource type="Script" uid="uid://btvyohb56e6xd" path="res://player.gd" id="1_64fjj"]
 [ext_resource type="PackedScene" uid="uid://cp0xlar5bqga0" path="res://Assets/Sword.glb" id="3_6fnve"]
 [ext_resource type="Texture2D" uid="uid://bsumctagrpkpw" path="res://Assets/pizzo_pernice_puresky_4k.exr" id="3_od0h0"]
+[ext_resource type="PackedScene" uid="uid://bhme4haxi88l1" path="res://Assets/Lil_Guy.glb" id="4_od0h0"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_64fjj"]
+[sub_resource type="Animation" id="Animation_vt2yd"]
+resource_name = "Idle"
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sword")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0.0333333, 1, 0.79101, 0.202877, -0.725657)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sword")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.233333, 1, -0.0887639, 0, 0, 0.996053, 0.466667, 1, 0, 0, 0, 1, 0.866667, 1, -0.00253945, 0, 0, 0.999997)
+
+[sub_resource type="Animation" id="Animation_od0h0"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sword")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.79101, 0.202877, -0.725657)
 
 [sub_resource type="Animation" id="Animation_6fnve"]
 resource_name = "swing"
@@ -23,33 +49,6 @@ tracks/1/path = NodePath("Sword")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = PackedFloat32Array(0.0333333, 1, 0, 0, 0, 1, 0.133333, 1, 0.251046, 0.055955, -0.213816, 0.942405, 0.2, 1, -0.249114, 0.367465, -0.343907, 0.827429, 0.3, 1, -0.284083, 0.4529, -0.315637, 0.783933, 0.4, 1, -0.466034, 0.63126, -0.322167, 0.529652, 0.5, 1, -0.534018, 0.747713, -0.18922, 0.346331, 0.6, 1, -0.471736, 0.768354, -0.0671674, 0.427301, 0.7, 1, -0.330242, 0.500236, -0.362784, 0.713507, 0.833333, 1, -0.211145, 0.272384, -0.44282, 0.827729, 0.933333, 1, 0, 0, 0, 1)
-
-[sub_resource type="Animation" id="Animation_od0h0"]
-length = 0.001
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sword")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0.79101, 0.202877, -0.725657)
-
-[sub_resource type="Animation" id="Animation_vt2yd"]
-resource_name = "Idle"
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sword")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0.0333333, 1, 0.79101, 0.202877, -0.725657)
-tracks/1/type = "rotation_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sword")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.233333, 1, -0.0887639, 0, 0, 0.996053, 0.466667, 1, 0, 0, 0, 1, 0.866667, 1, -0.00253945, 0, 0, 0.999997)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vt2yd"]
 _data = {
@@ -85,11 +84,6 @@ size = Vector3(47.2154, 1, 42.9697)
 [node name="Player" type="CharacterBody3D" parent="."]
 script = ExtResource("1_64fjj")
 
-[node name="PlayerTemporaryMesh" type="MeshInstance3D" parent="Player"]
-mesh = SubResource("CapsuleMesh_64fjj")
-
-[node name="PlayerTemporaryMesh2" type="MeshInstance3D" parent="Player"]
-
 [node name="PlayerAnimations" type="AnimationPlayer" parent="Player"]
 libraries = {
 &"": SubResource("AnimationLibrary_vt2yd")
@@ -117,6 +111,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.79101, 0.202877, -0.725657)
 [node name="AreaCollider" type="CollisionShape3D" parent="Player/Sword/DamageArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00303042, 0.575262, 0.00251764)
 shape = SubResource("BoxShape3D_6fnve")
+
+[node name="Player_Skin" parent="Player" instance=ExtResource("4_od0h0")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vt2yd")

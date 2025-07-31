@@ -22,9 +22,9 @@ var released_jump = false
 @onready var animation_player = $PlayerAnimations
 
 
-func _ready():
+#func _ready():
 	#Captures Mouse
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _input(event):
 	#Camera Movement
