@@ -20,7 +20,7 @@ var rest_point_sword = 0
 
 #Declared Nodes
 @onready var camera_origin: Node3D = $CameraOrigin
-@onready var animation_player = $Sword/SwordAnimations
+@onready var animation_player = $CameraOrigin/Sword/SwordAnimations
 
 
 #func _ready():

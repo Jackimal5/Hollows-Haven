@@ -1,15 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://bkf2accpow3fq"]
+[gd_scene load_steps=16 format=3 uid="uid://bkf2accpow3fq"]
 
 [ext_resource type="Script" uid="uid://btvyohb56e6xd" path="res://Scripts/player.gd" id="1_15qo1"]
 [ext_resource type="PackedScene" uid="uid://cp0xlar5bqga0" path="res://Assets/Sword.glb" id="2_bc04g"]
 [ext_resource type="Texture2D" uid="uid://bkbamxqvi1f5w" path="res://Assets/Stamina_Bar-removebg-preview.png" id="2_ifqnq"]
 [ext_resource type="Script" uid="uid://j1ydh2kjkmv1" path="res://Scripts/ui.gd" id="2_kbjuv"]
-[ext_resource type="PackedScene" uid="uid://bhme4haxi88l1" path="res://Assets/Lil_Guy.glb" id="3_ifqnq"]
 [ext_resource type="Texture2D" uid="uid://bsumctagrpkpw" path="res://Assets/pizzo_pernice_puresky_4k.exr" id="4_kbjuv"]
 [ext_resource type="Texture2D" uid="uid://dgue1acteo1kt" path="res://Assets/Health_Bar-removebg-preview.png" id="4_msx0k"]
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_15qo1"]
-height = 1.89453
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6fnve"]
 size = Vector3(0.03508, 1.1543, 0.0678711)
@@ -19,14 +15,14 @@ resource_name = "Idle"
 tracks/0/type = "position_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sword")
+tracks/0/path = NodePath("CameraOrigin/Sword")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array(0.0333333, 1, 0.79101, 0.202877, -0.725657)
 tracks/1/type = "rotation_3d"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sword")
+tracks/1/path = NodePath("CameraOrigin/Sword")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.233333, 1, -0.0887639, 0, 0, 0.996053, 0.466667, 1, 0, 0, 0, 1, 0.866667, 1, -0.00253945, 0, 0, 0.999997)
@@ -36,7 +32,7 @@ length = 0.001
 tracks/0/type = "position_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sword")
+tracks/0/path = NodePath("CameraOrigin/Sword")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array(0, 1, 0.79101, 0.202877, -0.725657)
@@ -47,17 +43,17 @@ length = 1.02
 tracks/0/type = "position_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sword")
+tracks/0/path = NodePath("CameraOrigin/Sword")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0.790351, 0.202877, -0.155279, 0.233333, 1, 0.790351, 0.202877, -0.93429, 0.366667, 1, -0.216377, 0.202877, -1.54121, 0.466667, 1, -0.73871, 0.202877, -1.02773, 0.533333, 1, -1.03313, 0.0707609, -0.783854, 0.666667, 1, -1.37338, 0.0707609, -0.204704, 0.9, 1, -1.01381, 0.50295, -0.186077)
+tracks/0/keys = PackedFloat32Array(0.0333333, 1, 0.744727, -0.414474, -0.93429)
 tracks/1/type = "rotation_3d"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sword")
+tracks/1/path = NodePath("CameraOrigin/Sword")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0.0333333, 1, 0.251046, 0.055955, -0.213816, 0.942405, 0.2, 1, -0.249114, 0.367465, -0.343907, 0.827429, 0.4, 1, -0.466034, 0.63126, -0.322167, 0.529652, 0.5, 1, -0.534018, 0.747713, -0.18922, 0.346331, 0.666667, 1, -0.307046, 0.935071, -0.10705, 0.141087)
+tracks/1/keys = PackedFloat32Array(0, 1, 0.0991953, 0.0347886, -0.0988447, 0.989535)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vt2yd"]
 _data = {
@@ -65,6 +61,8 @@ _data = {
 &"RESET": SubResource("Animation_od0h0"),
 &"swing": SubResource("Animation_6fnve")
 }
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ifqnq"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6fnve"]
 panorama = ExtResource("4_kbjuv")
@@ -89,17 +87,28 @@ script = ExtResource("1_15qo1")
 [node name="CameraOrigin" type="Node3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49461, 0)
 
-[node name="SpringArm3D" type="SpringArm3D" parent="Player/CameraOrigin"]
-spring_length = 6.5
-margin = 0.5
+[node name="Sword" parent="Player/CameraOrigin" instance=ExtResource("2_bc04g")]
+transform = Transform3D(0.978038, 0.202522, 0.0492392, -0.188719, 0.96078, -0.203192, -0.0884589, 0.189437, 0.9779, 0.79101, 0.202877, -0.725657)
 
-[node name="Camera3D" type="Camera3D" parent="Player/CameraOrigin/SpringArm3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 6.5)
+[node name="DamageArea" type="Area3D" parent="Player/CameraOrigin/Sword"]
 
-[node name="UI" type="CanvasLayer" parent="Player/CameraOrigin/SpringArm3D/Camera3D"]
+[node name="AreaCollider" type="CollisionShape3D" parent="Player/CameraOrigin/Sword/DamageArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00303042, 0.575262, 0.00251764)
+shape = SubResource("BoxShape3D_6fnve")
+
+[node name="SwordAnimations" type="AnimationPlayer" parent="Player/CameraOrigin/Sword"]
+root_node = NodePath("../../..")
+libraries = {
+&"": SubResource("AnimationLibrary_vt2yd")
+}
+speed_scale = 1.46
+
+[node name="Camera3D" type="Camera3D" parent="Player/CameraOrigin"]
+
+[node name="UI" type="CanvasLayer" parent="Player/CameraOrigin/Camera3D"]
 script = ExtResource("2_kbjuv")
 
-[node name="StaminaBar" type="TextureProgressBar" parent="Player/CameraOrigin/SpringArm3D/Camera3D/UI"]
+[node name="StaminaBar" type="TextureProgressBar" parent="Player/CameraOrigin/Camera3D/UI"]
 offset_right = 40.0
 offset_bottom = 40.0
 fill_mode = 5
@@ -109,7 +118,7 @@ texture_progress = ExtResource("2_ifqnq")
 tint_under = Color(0.000709592, 0.0522006, 0.335589, 1)
 tint_progress = Color(0.300315, 0.408791, 0.959663, 1)
 
-[node name="HealthBar" type="TextureProgressBar" parent="Player/CameraOrigin/SpringArm3D/Camera3D/UI"]
+[node name="HealthBar" type="TextureProgressBar" parent="Player/CameraOrigin/Camera3D/UI"]
 offset_right = 40.0
 offset_bottom = 40.0
 fill_mode = 4
@@ -121,26 +130,7 @@ tint_progress = Color(0.733763, 0.106565, 0, 1)
 
 [node name="PlayerCollider" type="CollisionShape3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.168602, 0)
-shape = SubResource("CylinderShape3D_15qo1")
-
-[node name="Sword" parent="Player" instance=ExtResource("2_bc04g")]
-transform = Transform3D(0.902303, 0.431097, -0.00189069, -0.374908, 0.782517, -0.497102, -0.21282, 0.449246, 0.86769, 0.79101, 0.202877, -0.725657)
-
-[node name="DamageArea" type="Area3D" parent="Player/Sword"]
-
-[node name="AreaCollider" type="CollisionShape3D" parent="Player/Sword/DamageArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00303042, 0.575262, 0.00251764)
-shape = SubResource("BoxShape3D_6fnve")
-
-[node name="SwordAnimations" type="AnimationPlayer" parent="Player/Sword"]
-root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_vt2yd")
-}
-speed_scale = 1.46
-
-[node name="Player_Skin" parent="Player" instance=ExtResource("3_ifqnq")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_ifqnq")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vt2yd")
