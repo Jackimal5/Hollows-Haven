@@ -17,7 +17,7 @@ config/icon="res://Assets/icon.svg"
 
 [autoload]
 
-Bar="*res://Scripts/ui.gd"
+UI="*res://Scripts/ui.gd"
 
 [input]
 

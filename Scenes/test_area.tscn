@@ -1,68 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://bkf2accpow3fq"]
+[gd_scene load_steps=6 format=3 uid="uid://bkf2accpow3fq"]
 
-[ext_resource type="Script" uid="uid://btvyohb56e6xd" path="res://Scripts/player.gd" id="1_15qo1"]
-[ext_resource type="PackedScene" uid="uid://cp0xlar5bqga0" path="res://Assets/Sword.glb" id="2_bc04g"]
-[ext_resource type="Texture2D" uid="uid://bkbamxqvi1f5w" path="res://Assets/Stamina_Bar-removebg-preview.png" id="2_ifqnq"]
-[ext_resource type="Script" uid="uid://j1ydh2kjkmv1" path="res://Scripts/ui.gd" id="2_kbjuv"]
+[ext_resource type="PackedScene" uid="uid://c5cugu7icokbp" path="res://Scenes/player.tscn" id="1_kpu7f"]
 [ext_resource type="Texture2D" uid="uid://bsumctagrpkpw" path="res://Assets/pizzo_pernice_puresky_4k.exr" id="4_kbjuv"]
-[ext_resource type="Texture2D" uid="uid://dgue1acteo1kt" path="res://Assets/Health_Bar-removebg-preview.png" id="4_msx0k"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_6fnve"]
-size = Vector3(0.03508, 1.1543, 0.0678711)
-
-[sub_resource type="Animation" id="Animation_vt2yd"]
-resource_name = "Idle"
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CameraOrigin/Sword")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0.0333333, 1, 0.79101, 0.202877, -0.725657)
-tracks/1/type = "rotation_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CameraOrigin/Sword")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.233333, 1, -0.0887639, 0, 0, 0.996053, 0.466667, 1, 0, 0, 0, 1, 0.866667, 1, -0.00253945, 0, 0, 0.999997)
-
-[sub_resource type="Animation" id="Animation_od0h0"]
-length = 0.001
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CameraOrigin/Sword")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0.79101, 0.202877, -0.725657)
-
-[sub_resource type="Animation" id="Animation_6fnve"]
-resource_name = "swing"
-length = 1.02
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CameraOrigin/Sword")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0.0333333, 1, 0.744727, -0.414474, -0.93429)
-tracks/1/type = "rotation_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CameraOrigin/Sword")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 0.0991953, 0.0347886, -0.0988447, 0.989535)
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_vt2yd"]
-_data = {
-&"Idle": SubResource("Animation_vt2yd"),
-&"RESET": SubResource("Animation_od0h0"),
-&"swing": SubResource("Animation_6fnve")
-}
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ifqnq"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6fnve"]
 panorama = ExtResource("4_kbjuv")
@@ -81,60 +20,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.15843, -1.68656, 1.58695)
 use_collision = true
 size = Vector3(47.2154, 1, 42.9697)
 
-[node name="Player" type="CharacterBody3D" parent="."]
-script = ExtResource("1_15qo1")
-
-[node name="CameraOrigin" type="Node3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49461, 0)
-
-[node name="Sword" parent="Player/CameraOrigin" instance=ExtResource("2_bc04g")]
-transform = Transform3D(0.978038, 0.202522, 0.0492392, -0.188719, 0.96078, -0.203192, -0.0884589, 0.189437, 0.9779, 0.79101, 0.202877, -0.725657)
-
-[node name="DamageArea" type="Area3D" parent="Player/CameraOrigin/Sword"]
-
-[node name="AreaCollider" type="CollisionShape3D" parent="Player/CameraOrigin/Sword/DamageArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00303042, 0.575262, 0.00251764)
-shape = SubResource("BoxShape3D_6fnve")
-
-[node name="SwordAnimations" type="AnimationPlayer" parent="Player/CameraOrigin/Sword"]
-root_node = NodePath("../../..")
-libraries = {
-&"": SubResource("AnimationLibrary_vt2yd")
-}
-speed_scale = 1.46
-
-[node name="Camera3D" type="Camera3D" parent="Player/CameraOrigin"]
-
-[node name="UI" type="CanvasLayer" parent="Player/CameraOrigin/Camera3D"]
-script = ExtResource("2_kbjuv")
-
-[node name="StaminaBar" type="TextureProgressBar" parent="Player/CameraOrigin/Camera3D/UI"]
-offset_right = 40.0
-offset_bottom = 40.0
-fill_mode = 5
-radial_initial_angle = 90.0
-texture_under = ExtResource("2_ifqnq")
-texture_progress = ExtResource("2_ifqnq")
-tint_under = Color(0.000709592, 0.0522006, 0.335589, 1)
-tint_progress = Color(0.300315, 0.408791, 0.959663, 1)
-
-[node name="HealthBar" type="TextureProgressBar" parent="Player/CameraOrigin/Camera3D/UI"]
-offset_right = 40.0
-offset_bottom = 40.0
-fill_mode = 4
-radial_initial_angle = 90.0
-texture_under = ExtResource("4_msx0k")
-texture_progress = ExtResource("4_msx0k")
-tint_under = Color(0.273796, 0, 0.020587, 1)
-tint_progress = Color(0.733763, 0.106565, 0, 1)
-
-[node name="PlayerCollider" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.168602, 0)
-shape = SubResource("CapsuleShape3D_ifqnq")
+[node name="Player" parent="." instance=ExtResource("1_kpu7f")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vt2yd")
 
 [node name="DirectionalLight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.0474305, 0.708348, -0.704268, -0.95922, 0.16439, 0.229943, 0.278654, 0.686454, 0.671665, 0, 0, 0)
-visible = false

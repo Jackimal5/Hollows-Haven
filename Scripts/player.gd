@@ -23,9 +23,9 @@ var rest_point_sword = 0
 @onready var animation_player = $CameraOrigin/Sword/SwordAnimations
 
 
-#func _ready():
+func _ready():
 	#Captures Mouse
-	#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _input(event):
 	#Camera Movement
@@ -68,11 +68,11 @@ func _physics_process(delta: float) -> void:
 	#Sword Attack 
 	if Input.is_action_just_pressed("left_click"):
 		if rest_point_sword == 0:
-			animation_player.speed_scale = 1.5
+			animation_player.speed_scale = 2
 			animation_player.play("swing")
 			rest_point_sword = 1
 		elif rest_point_sword == 1:
-			animation_player.speed_scale = 1.5
+			animation_player.speed_scale = 2
 			animation_player.play_backwards("swing")
 			rest_point_sword = 0
 			
@@ -85,6 +85,7 @@ func _physics_process(delta: float) -> void:
 		if sprinting:
 			velocity.x = move_toward(velocity.x, direction.x * sprinting_speed, acceleration * delta)
 			velocity.z = move_toward(velocity.z, direction.z * sprinting_speed, acceleration * delta)
+			UI.stamina -= 1
 		else:
 			velocity.x = move_toward(velocity.x, direction.x * walking_speed, acceleration * delta)
 			velocity.z = move_toward(velocity.z, direction.z * walking_speed, acceleration * delta)

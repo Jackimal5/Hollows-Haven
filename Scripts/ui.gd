@@ -8,14 +8,8 @@ var stamina = 100
 @onready var StaminaBar: TextureProgressBar = $StaminaBar
 @onready var HealthBar: TextureProgressBar = $HealthBar
 
-func _ready():
-	health = 100
-	stamina = 100
-
 func _process(delta):
-	print("Stamina:", StaminaBar)
-	print("Health:", HealthBar)
-	StaminaBar = $StaminaBar
-	HealthBar = $HealthBar
-	#StaminaBar.value = stamina
-	#HealthBar.value = health
+	print(stamina)
+	if HealthBar != null and StaminaBar != null and stamina != 100:
+		StaminaBar.value = stamina
+		HealthBar.value = health
